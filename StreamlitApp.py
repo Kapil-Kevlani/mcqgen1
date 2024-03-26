@@ -5,7 +5,7 @@ import traceback
 from dotenv import load_dotenv
 from src.mcqgenerator.utils import read_file, get_table_data
 import streamlit as st
-from langchain.callbacks import get_openai_callback
+from langchain_community.callbacks import get_openai_callback
 from src.mcqgenerator.MCQGenerator import generate_evaluate_chain
 from src.mcqgenerator.logger import logging
 
@@ -19,7 +19,6 @@ st.title("MCQs Creator Application with LangChain")
 
 #Create a form using st.form 
 with st.form("user_inputs"):
-
     #File Upload
     uploaded_file=st.file_uploader("Uplaod a PDF or txt file")
     #Input Fields

@@ -2,17 +2,17 @@ import os
 import json
 import pandas as pd
 import traceback
-from src.mcqgenerator.logger import logging
-from langchain.chat_models import ChatOpenAI
 from dotenv import load_dotenv
+from src.mcqgenerator.utils import read_file, get_table_data
+from src.mcqgenerator.logger import logging
 
 #importing necessary packages from langchain
-from langchain.llms import OpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chains import SequentialChain
-from langchain_community.callbacks import get_openai_callback
-import PyPDF2
+# from langchain_community.callbacks import get_openai_callback
+# import PyPDF2
 from datetime import datetime
 datetime.now().strftime('%m_%d_%y_%H_%M_%S')
 
@@ -24,8 +24,7 @@ KEY = os.getenv("OPENAI_API_KEY")
 
 
 
-
-llm = ChatOpenAI(openai_api_key = KEY, model_name = 'gpt-3.5-turbo', temperature = 0.3)
+llm = ChatOpenAI(temperature=0.3, openai_api_key="KEY")
 
 template="""
 Text:{text}
@@ -42,7 +41,7 @@ quiz_generator_prompt = PromptTemplate(
     template=template
 )
 
-quiz_chain = LLMChain(llm = llm, prompt=quiz_generator_prompt, output_key='quiz', verbose=True)
+quiz_chain = LLMChain(llm = llm,prompt= quiz_generator_prompt, output_key='quiz', verbose=True)
 
 
 template2="""
